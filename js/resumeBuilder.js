@@ -1,3 +1,5 @@
+//		RESUME INFORMATION ARRAYS
+
 var bio = {
 	"name": "Ryan Harris",
 	"role": "Front-End Developer",
@@ -83,4 +85,81 @@ var projects = {
 		}
 	]
 };
+
+//		CREATE THE SKILLS SECTION
+
+var skillsList = bio.skills.length;
+
+if (skillsList > 0) {
+	$('#header').append(HTMLskillsStart);
+
+	$('#skills').append(HTMLskills.replace('%data%', bio.skills[0]));
+	$('#skills').append(HTMLskills.replace('%data%', bio.skills[1]));
+	$('#skills').append(HTMLskills.replace('%data%', bio.skills[2]));
+	$('#skills').append(HTMLskills.replace('%data%', bio.skills[3]));
+}
+
+// DISPLAY WORK HISTORY
+
+function displayWork() {
+
+	var jobList = work.jobs;
+
+	for (var i = 0; i < jobList.length; i++) {
+		$('#workExperience').append(HTMLworkStart);
+
+		// Get and append employer & title
+		var employer = HTMLworkEmployer.replace('%data%', jobList[i].employer);
+		var title = HTMLworkTitle.replace('%data%', jobList[i].title);
+		var jobInfo = employer + title;
+		$('.work-entry:last').append(jobInfo);
+
+		// Get and append dates worked
+		var dates = HTMLworkDates.replace('%data%', jobList[i].dates);
+		$('.work-entry:last').append(dates);
+
+		// Get and append work location
+		var locale = HTMLworkLocation.replace('%data%', jobList[i].location);
+		$('.work-entry:last').append(locale);
+
+		// Get and append job description
+		var desc = HTMLworkDescription.replace('%data%', jobList[i].description);
+		$('.work-entry:last').append(desc);
+	}
+
+}
+
+displayWork();
+
+//		INTERNATIONALIZE NAMES
+
+function inName(name) {
+	var name = name.trim();
+	var splitName = name.split(" ");
+
+	var firstName = splitName[0];
+	var lastName = splitName[1];
+
+	firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+	lastName = lastName.toUpperCase();
+
+
+	return firstName + " " + lastName;
+}
+
+$('#main').append(internationalizeButton);
+
+//		LOG MOUSE CLICK COORDINATES
+
+$(document).click(function(loc) {
+
+	var xCoord = loc.pageX;
+	var yCoord = loc.pageY;
+
+	logClicks(xCoord, yCoord);
+
+});
+
+
+
 
