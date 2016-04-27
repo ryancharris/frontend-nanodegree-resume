@@ -62,7 +62,7 @@ var work = {
 		{
 			"employer": "Rutgers Film Bureau",
 			"title": "Editor / Animator / Producer",
-			"location": "New Brunwick, NJ",
+			"location": "New Brunswick, NJ",
 			"dates": "2014-2015",
 			"description": "Worked on 'Antarctic Edge', a documentary about climate change",
 		},
@@ -75,16 +75,33 @@ var projects = {
 			"title": "www.ryancharris.com",
 			"dates": "2016",
 			"description": "Redesigned my portfolio website",
-			"images": ["../images/ryancharris.png"]
+			"images": ["images/ryancharris.png"]
 		},
 		{
 			"title": "Antarctic Edge: 70° South",
 			"dates": "2015",
 			"description": "NSF-funded documentary about climate change in Antarctica",
-			"images": ["../images/antarctic-edge.png"]
+			"images": ["images/antarctic-edge.png"]
 		}
 	]
 };
+
+//		CREATE HEADER SECTION
+
+var formattedName = HTMLheaderName.replace('%data%', bio.name);
+var formattedRole = HTMLheaderRole.replace('%data%', bio.role);
+var formattedPic = HTMLbioPic.replace('%data%', bio.bioPic);
+
+$('#header').prepend(formattedRole);
+$('#header').prepend(formattedName);
+$('#header').append(formattedPic);
+
+//		CREATE CONTENT SECTION
+
+$('#topContacts').append(HTMLemail.replace('%data%', bio.contacts.email));
+$('#topContacts').append(HTMLgithub.replace('%data%', bio.contacts.github));
+$('#topContacts').append(HTMLtwitter.replace('%data%', bio.contacts.twitter));
+$('#topContacts').append(HTMLlocation.replace('%data%', bio.contacts.location));
 
 //		CREATE THE SKILLS SECTION
 
@@ -131,6 +148,37 @@ function displayWork() {
 
 displayWork();
 
+//		DISPLAY PROJECTS
+
+projects.display = function() {
+
+	var projectList = projects.projects;
+
+	for (project in projectList) {
+
+		$('#projects').append(HTMLprojectStart);
+
+		var projectTitle = HTMLprojectTitle.replace('%data%', projectList[project].title);
+		var projectDates = HTMLprojectDates.replace('%data%', projectList[project].dates);
+		var projectDescription = HTMLprojectDescription.replace('%data%', projectList[project].description);
+		var projectImage = HTMLprojectImage.replace('%data%', projectList[project].images);
+
+		$('.project-entry:last').append(projectTitle, projectDates, projectDescription);
+
+		if (projectList[project].images.length > 0) {
+			for (image in projectList[project].images) {
+				var projectImage = HTMLprojectImage.replace('%data%', projectList[project].images[image]);
+				$('.project-entry:last').append(projectImage);
+			}
+		}
+
+	}
+
+}
+
+projects.display();
+
+
 //		INTERNATIONALIZE NAMES
 
 function inName(name) {
@@ -160,6 +208,6 @@ $(document).click(function(loc) {
 
 });
 
-
+$('#mapDiv').append(googleMap);
 
 
